@@ -9,7 +9,7 @@
     font-size: 20px;
     text-align: center;
 }
-.btn1{
+.btn{
   background-color: #000000;
   border: 3px solid;
   color: #FF0000;
@@ -17,26 +17,13 @@
   text-decoration: none;
   margin: 4px 2px;
   cursor: pointer;
-  margin-left: 25%;
-  margin-top: 2%;
+  margin-right: auto;
+  margin-left: auto;
   font-size: 25px;
   border-radius: 12px;
   border-color: #FF0000;
 }
-.btn2{
-  background-color: #000000;
-  border: 3px solid; 
-  color: #FF0000;
-  padding: 32px 64px;
-  text-decoration: none;
-  margin: 4px 2px;
-  cursor: pointer;
-  margin-left: 15%;
-  margin-top: 2%;
-  font-size: 25px;
-  border-radius: 12px;
-  border-color: #FF0000;
-}
+
 .container img{
   width: 70%;
   height: 55%;
