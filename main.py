@@ -1,7 +1,13 @@
 from flask import Flask
 from flask import redirect
+from flask_socketio import SocketIO
+
+io = SocketIO()             # create socket listener
 
 app = Flask(__name__)
+
+# begin listening for different socket events
+
 
 @app.route('/')
 def root():
