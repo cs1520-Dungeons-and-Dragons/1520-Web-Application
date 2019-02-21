@@ -1,0 +1,75 @@
+<style media="screen">
+.container{
+    /* background-color: dark; */
+    height: 300px;
+    width: 300px;
+    margin: auto;
+    margin-top: 10%;
+    /* border: 1px rgb(19, 17, 17) solid;  */
+    padding: 20px;
+    font-size: 20px;
+    text-align: center;
+}
+.btn1{
+  background-color: #000000;
+  border: 3px solid;
+  color: #FF0000;
+  padding: 32px 64px;
+  text-decoration: none;
+  margin: 4px 2px;
+  cursor: pointer;
+  margin-left: 25%;
+  margin-top: 2%;
+  font-size: 25px;
+  border-radius: 12px;
+  border-color: #FF0000;
+}
+.btn2{
+  background-color: #000000;
+  border: 3px solid; 
+  color: #FF0000;
+  padding: 32px 64px;
+  text-decoration: none;
+  margin: 4px 2px;
+  cursor: pointer;
+  margin-left: 15%;
+  margin-top: 2%;
+  font-size: 25px;
+  border-radius: 12px;
+  border-color: #FF0000;
+}
+.container img{
+  width: 70%;
+  height: 55%;
+  display:block;
+  margin-left: 15%;
+  margin-top: 1%;
+}
+div.topnavbar{
+  overflow: hidden;
+  background-color:  #000000;
+  }
+  div.topnavbar a{
+      float:right;
+      color:  #FF0000;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+      font-size: 20px;
+      width: 28%;
+  }
+  div.topnavbar a:hover{
+      background-color: #8B0000;
+      font-weight: bold;
+      color:whitesmoke;
+  }
+  div.topnavbar a.active{
+      background-color: #800000;
+      color: whitesmoke;
+      font-weight: bold;
+  }
+  div.topnavbar img{
+      padding-left: 20px;
+  }
+
+</style>
