@@ -1,10 +1,16 @@
 <!DOCTYPE html>
-<html>
-	<script src="{{ url_for('static', filename='js/play.js')}}"></script>
+<html lang="en">
+	<head>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
+		<script src="{{ url_for('static', filename='js/play.js') }}"></script>
+		<title>Play D&D!</title>
+	</head>
 	<body>
 		<h1>{{ room }}</h1>
+		<h1>{{ name }}</h1>
 		<textarea id="chatlog" cols="80" rows="30"></textarea><br><br>
 		<input type="text" size="80" placeholder="Enter message..."><br><br>
-		<a href="#" onclick="leaveRoom();">Leave Room</a>	
+		<a href="#" onclick="leave_room();">Leave Room</a>	
 	</body>
 </html>

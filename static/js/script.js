@@ -10,8 +10,14 @@ $(document).ready(function()
 			type: "POST",
 			url: '/joinRoom',
 			data: JSON.stringify(data),
-			success: function(data){console.log("request sent.");},
-			dataType: "text",
+			context: document,
+			success: function(data){
+				console.log(data);
+				//window.location.href = data.redirect;
+				//$('html').html(data);
+				document.write(data);
+			},
+			dataType: 'html',
 			contentType: 'application/json;charset=UTF-8'
 		});
 	});
