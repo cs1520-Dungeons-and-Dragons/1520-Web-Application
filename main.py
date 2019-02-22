@@ -1,5 +1,5 @@
 from flask import Flask, url_for, redirect, render_template, request
-from flask import session
+from flask import session, jsonify
 from flask_socketio import SocketIO, emit, join_room, leave_room
 
 app = Flask(__name__)
@@ -44,22 +44,15 @@ def play():
     print ('in play\n')
     room = session.get('room')
     name = session.get('name')
-    return render_template('play.html', room=room, name=name) 
-    #return '''
-    #<html>
-    #<head>
-    #<title>Test</title>
-    #</head><body>loaded</body>
-    #</html>
-    #'''
+    return render_template('play.html', room=room, name=name)
 
-#ajax post to join room, store session data for user
+#post to join room, store session data for user
+# redirect them to play url
 @app.route('/joinRoom', methods=['POST'])
 def join_post():
-    session['name'] = request.json['user']
-    session['room'] = request.json['room']
-    print (url_for('.play'))
-    return redirect(url_for('.play'))
+    session['name'] = request.form['uname']
+    session['room'] = request.form['rname']
+    return redirect(url_for('.play'), code=302)
 
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port=8080, debug=True)
