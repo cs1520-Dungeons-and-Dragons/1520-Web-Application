@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html>
+	<script src="{{ url_for('static', filename='js/play.js')}}"></script>
+	<body>
+		<h1>{{ room }}</h1>
+		<textarea id="chatlog" cols="80" rows="30"></textarea><br><br>
+		<input type="text" size="80" placeholder="Enter message..."><br><br>
+		<a href="#" onclick="leaveRoom();">Leave Room</a>	
+	</body>
+</html>

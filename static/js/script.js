@@ -1,17 +1,17 @@
-var socket;
 $(document).ready(function()
 {
-	socket = io.connect('http://' + document.domain + ':' + location.port);
-	socket.on('connect', function(){
-		socket.emit('connection', {data: 'I joined!!!!'});
-	});
-	
 	$('#joindm').click(function(){
 		console.log("That doesn't work goofball.");
 	});
 	
 	$('#joinp').click(function(){
-		console.log("Joining " + $('#roomname').val() + "...");
-		socket.emit('joinRoom', {room: $('#roomname')});
+		let data = {user: $('#user').val(), room: $('#roomname').val()};
+		var jqxhr = $.ajax({
+			type: "POST",
+			url: '/joinRoom',
+			data: data,
+			success: function(data){console.log("request sent.");},
+			dataType: "text"
+		});
 	});
 });
