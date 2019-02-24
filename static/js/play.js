@@ -4,16 +4,19 @@ $(document).ready(function(){
     console.log("doc loaded");
 	socket = io.connect('http://' + document.domain + ':' + location.port + '/play');
 	socket.on('connect', function(){
+		console.log("socket connected");
 		socket.emit('joined', {});
 	});
 	
 	socket.on('status', function(data){
-		$('#chatlog').val($('#chatlog').val() + '<' + data.msg + '>\n');
+		console.log(data);
+		$('#chatlog').append('<p style=\'color:' + data.color + '\'>' + data.msg + '</p>');
 		$('#chatlog').scrollTop($('#chatlog')[0].scrollHeight);
 	});
 	
 	socket.on('message', function(data){
-		$('#chatlog').val($('#chatlog').val() + data.msg + '\n');
+		console.log(data);
+		$('#chatlog').append('<p style=\'color:' + data.color + '\'>' + data.msg + '</p>');
 		$('#chatlog').scrollTop($('#chatlog')[0].scrollHeight);
 	});
 	
@@ -21,9 +24,14 @@ $(document).ready(function(){
 		var code = e.keyCode || e.which;
 		if(code == 13)
 		{
-			text = $('#text').val();
+			var t = $('#text').val();
 			$('#text').val('');
-			socket.emit('text', {msg: text});
+			//erase all script tags
+			var SCRIPT_REGEX = /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi;
+			while (SCRIPT_REGEX.test(t)) {
+				t = t.replace(SCRIPT_REGEX, "");
+			}
+			socket.emit('text', {msg: t});
 		}
     });
 });
