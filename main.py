@@ -56,5 +56,13 @@ def join_post():
     #print(msg)
     return redirect(url_for('.play'), code=302)
 
+# disabling caching by modifying headers of each response
+@app.after_request
+def add_header(resp):
+    resp.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+    resp.headers['Pragma'] = 'no-cache'
+    resp.headers['Expires'] = '0'
+    return resp
+
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port=8080, debug=True)
