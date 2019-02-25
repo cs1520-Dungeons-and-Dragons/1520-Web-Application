@@ -4,10 +4,11 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
 		<script src="{{ url_for('static', filename='js/play.js') }}"></script>
-		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/play.css') }}">
+		<link rel="stylesheet" type="text/css" href="../static/css/play.css">
+
 		<title>Play D&D!</title>
 	</head>
-	<body>
+	<body background=./assets/tavern.png, background-repeat:no-repeat;s>
 		<h1>Welcome to {{ room }}, {{ name }}</h1>
 		<!----><div id="chatbox">
 			<div id="chatlog">

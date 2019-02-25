@@ -1,11 +1,12 @@
 #chatbox{
 	overflow: none;
 	position: relative;
-	width: 80%;
+	width: 50%;
 	height: 400px;
 	border: 4px groove gray;
 	padding: 10px;
 	display: inline-block;
+	background-color: rgba(255, 255, 255, 0.6);
 }
 #chatlog{
 	overflow: auto;
@@ -19,5 +20,15 @@
 	
 }
 h1{
-	font-family: "Comic Sans MS", cursive, sans-serif;
+	font-family: "Trebuchet MS";
+	color: black;
+	text-shadow: -1px 0 black, 0 1px white, 1px 0 white, 0 -1px white;
 }
+
+body{   
+	background-image: url(../assets/tavern.png);
+	background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
