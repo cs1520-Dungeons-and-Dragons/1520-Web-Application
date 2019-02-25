@@ -19,10 +19,11 @@
 #leave{
 	
 }
+
 h1{
 	font-family: "Trebuchet MS";
 	color: black;
-	text-shadow: -1px 0 black, 0 1px white, 1px 0 white, 0 -1px white;
+	text-shadow: -1px 0 red, 0 1px red, 1px 0 red, 0 -1px red;
 }
 
 body{   
@@ -31,4 +32,20 @@ body{
     background-repeat: no-repeat;
     background-size: cover;
 }
+
+.btn{
+  background-color: #000000;
+  border: 3px solid;
+  color: #FF0000;
+  padding: 8px 16px;
+  text-decoration: none;
+  margin: 4px 2px;
+  cursor: pointer;
+  margin-right: auto;
+  margin-left: auto;
+  font-size: 16px;
+  border-radius: 12px;
+  border-color: #FF0000;
+}
+
 
