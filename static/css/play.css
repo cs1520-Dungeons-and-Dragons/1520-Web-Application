@@ -6,7 +6,7 @@
 	border: 4px groove gray;
 	padding: 10px;
 	display: inline-block;
-	background-color: rgba(255, 255, 255, 0.6);
+	background-color: rgba(241, 241, 212, 1);
 }
 #chatlog{
 	overflow: auto;
@@ -16,12 +16,18 @@
 	font-family: "Courier New", Courier, monospace;
 	display:inline-block;
 }
+input{
+	padding: 10px;
+	border: 4px groove gray;
+	width: 50%;
+	background-color: rgba(241, 241, 212, 1);
+}
 #leave{
 	
 }
 
 h1{
-	font-family: "Trebuchet MS";
+	font-family: "Trebuchet MS", Tahoma, sans-serif;
 	color: black;
 	text-shadow: -1px 0 red, 0 1px red, 1px 0 red, 0 -1px red;
 }
