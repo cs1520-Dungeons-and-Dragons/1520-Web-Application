@@ -52,8 +52,8 @@ def play():
 def join_post():
     session['name'] = request.form['uname']
     session['room'] = request.form['rname']
-    msg = session.get('name') + ' joined room: ' + session.get('room')
-    print(msg)
+    #msg = session.get('name') + ' joined room: ' + session.get('room')
+    #print(msg)
     return redirect(url_for('.play'), code=302)
 
 if __name__ == '__main__':

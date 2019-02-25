@@ -9,13 +9,13 @@ $(document).ready(function(){
 	});
 	
 	socket.on('status', function(data){
-		console.log(data);
+		//console.log(data);
 		$('#chatlog').append('<p style=\'color:' + data.color + '\'>&lt;' + data.msg + '&gt;</p>');
 		$('#chatlog').scrollTop($('#chatlog')[0].scrollHeight);
 	});
 	
 	socket.on('message', function(data){
-		console.log(data);
+		//console.log(data);
 		$('#chatlog').append('<p style=\'color:' + data.color + '\'>' + data.msg + '</p>');
 		$('#chatlog').scrollTop($('#chatlog')[0].scrollHeight);
 	});
@@ -31,7 +31,7 @@ $(document).ready(function(){
 			while (SCRIPT_REGEX.test(t)) {
 				t = t.replace(SCRIPT_REGEX, "");
 			}
-			socket.emit('text', {msg: t});
+			if(t !== "") socket.emit('text', {msg: t});
 		}
     });
 	
