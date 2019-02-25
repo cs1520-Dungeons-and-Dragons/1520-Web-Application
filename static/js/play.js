@@ -10,7 +10,7 @@ $(document).ready(function(){
 	
 	socket.on('status', function(data){
 		console.log(data);
-		$('#chatlog').append('<p style=\'color:' + data.color + '\'>' + data.msg + '</p>');
+		$('#chatlog').append('<p style=\'color:' + data.color + '\'>&lt;' + data.msg + '&gt;</p>');
 		$('#chatlog').scrollTop($('#chatlog')[0].scrollHeight);
 	});
 	
@@ -34,10 +34,11 @@ $(document).ready(function(){
 			socket.emit('text', {msg: t});
 		}
     });
+	
+	$('#leave').click(function(){
+		socket.emit('left', {}, function(){
+			socket.disconnect();
+			window.location.href = "/static/index.html";
+		});
+	});
 });
-function leave_room(){
-    socket.emit('left', {}, function(){
-        socket.disconnect();
-        window.location.href = "/static/index.html";
-    });
-}
