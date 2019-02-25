@@ -2,7 +2,7 @@ var socket;
 console.log("before doc");
 $(document).ready(function(){
     console.log("doc loaded");
-	socket = io.connect('http://' + document.domain + ':' + location.port + '/play');
+	socket = io.connect('https://' + document.domain + ':' + location.port + '/play');
 	socket.on('connect', function(){
 		console.log("socket connected");
 		socket.emit('joined', {});
