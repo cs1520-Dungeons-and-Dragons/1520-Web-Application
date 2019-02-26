@@ -6,7 +6,7 @@
 	border: 4px groove gray;
 	padding: 10px;
 	display: inline-block;
-	background-color: rgba(241, 241, 212, 1);
+	background-color: rgba(241, 241, 212, 0.85);
 }
 #chatlog{
 	overflow: auto;
