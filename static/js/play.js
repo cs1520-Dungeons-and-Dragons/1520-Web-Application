@@ -41,4 +41,12 @@ $(document).ready(function(){
 			window.location.href = "/static/index.html";
 		});
 	});
+
+    $('#dice_roll').click(function(){
+        socket.emit('dice_roll', {dice_type: 12});
+
+    });
+
+
+    
 });
