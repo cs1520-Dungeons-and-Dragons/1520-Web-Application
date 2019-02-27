@@ -71,7 +71,7 @@ def dice_roll(data):
     roll = random.randint(1, int(data['dice_type']))
     roll2 = -1
     msg = session.get('name') + ' rolled a ' + str(roll) +'!'
-    if(data['adv'] == True ^^ data['disadv'] == True):
+    if(data['adv'] == True != data['disadv'] == True):
         roll2 = random.randint(1, int(data['dice_type']))
         msg = session.get('name') + ' rolled ' + roll + ' and ' + roll2 + ' with ' + ('advantage' if data['adv'] else 'disadvantage') + ': use roll ' 
         + (max(roll1, roll2) if data['adv'] else min(roll1, roll2))

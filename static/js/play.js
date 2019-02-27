@@ -43,7 +43,7 @@ $(document).ready(function(){
 	});
 
     $('#dice_roll').click(function(){
-        socket.emit('dice_roll', {dice_type: $('#dice_list').options[$('#dice_list').selectedIndex].value, adv: $('#adv').value, disadv: $('#disadv').value});
+        socket.emit('dice_roll', {dice_type: $('#dice_list').val(), adv: $('#adv').val(), disadv: $('#disadv').value});
 
     });
 
