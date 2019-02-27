@@ -67,9 +67,16 @@ def add_header(resp):
 
 #dice roll function for d4,6,8,10,12,20
 @socketio.on('dice_roll', namespace='/play')
-def dice_roll(dice_range):
-    roll = random.randint(1, int(dice_range['dice_type']))
-    emit('status', {'msg': session.get('name') + ' rolled a ' + str(roll) +'!', 'color':'green'}, room=session.get('room'))
+def dice_roll(data):
+    roll = random.randint(1, int(data['dice_type']))
+    roll2 = -1
+    msg = session.get('name') + ' rolled a ' + str(roll) +'!'
+    if(data['adv'] == True ^^ data['disadv'] == True):
+        roll2 = random.randint(1, int(data['dice_type']))
+        msg = session.get('name') + ' rolled ' + roll + ' and ' + roll2 + ' with ' + ('advantage' if data['adv'] else 'disadvantage') + ': use roll ' 
+        + (max(roll1, roll2) if data['adv'] else min(roll1, roll2))
+
+    emit('status', {'msg': msg, 'color':'green'}, room=session.get('room'))
    
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port=8080, debug=True)
