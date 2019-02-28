@@ -1,6 +1,7 @@
 from flask import Flask, url_for, redirect, render_template, request
 from flask import session, jsonify
 from flask_socketio import SocketIO, emit, join_room, leave_room
+import random
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'memeslol'
@@ -64,5 +65,18 @@ def add_header(resp):
     resp.headers['Expires'] = '0'
     return resp
 
+#dice roll function for d4,6,8,10,12,20
+@socketio.on('dice_roll', namespace='/play')
+def dice_roll(data):
+    roll = random.randint(1, int(data['dice_type']))
+    roll2 = -1
+    msg = '(d' + str(data['dice_type']) + '): ' + session.get('name') + ' rolled a ' + str(roll)
+    if(data['adv'] != data['disadv']):
+        roll2 = random.randint(1, int(data['dice_type']))
+        msg = ('(d' + str(data['dice_type']) + '): ' + session.get('name') + ' rolled ' + str(roll) + ' and ' + str(roll2) + ' with ' + ('advantage' if data['adv'] else 'disadvantage') + ': use roll ' 
+        + (str(max(roll, roll2)) if data['adv'] else str(min(roll, roll2))))
+
+    emit('roll', {'msg': msg, 'color':'green', 'weight':'bold'}, room=session.get('room'))
+   
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port=8080, debug=True)

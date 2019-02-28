@@ -10,13 +10,29 @@
 	</head>
 	<body>
 		<h1>Welcome to {{ room }}, {{ name }}</h1>
-		<!----><div id="chatbox">
+		<div class="chat" id="chatbox">
 			<div id="chatlog">
 			</div>
-		</div><!---->
-		<!----<textarea id="chatmessages" cols="80" rows="30" readonly></textarea><!----><br><br>
+            <div class="roll">
+                <h2>Dice Roll:</h2>
+                <div class = "roll_type">
+                    <input type="radio" name = "roll_type" id = "single" checked="checked"><label>Single Roll</label>
+                    <input type="radio" name = "roll_type" id ="adv"><label>Advantage</label>
+                    <input type="radio" name = "roll_type" id ="disadv"><label>Disadvantage</label>
+                </div>
+                <select id = "dice_list">
+                    <option value="4">d4</option>
+                    <option value="6">d6</option>
+                    <option value="8">d8</option>
+                    <option value="10">d10</option>
+                    <option value="12">d12</option>
+                    <option value="20">d20</option>
+                </select>
+                <button class = "btn" id ="dice_roll">Roll</button>
+            </div>
+		</div>
+        <br><br>
 		<input id="text" size="118" placeholder="Enter message..."><br><br>
-		<!----<a href="#" onclick="leave_room();">Leave Room</a><!---->
 		<button class = "btn" id="leave">Leave Room</button>
 	</body>
 </html>
