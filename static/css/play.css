@@ -89,6 +89,7 @@ body{
 }
 
 label {
+    font-family: "Trebuchet MS", sans-serif;
     cursor: pointer;
     color: rgb(241, 241, 212);
     margin-left: -30px;
