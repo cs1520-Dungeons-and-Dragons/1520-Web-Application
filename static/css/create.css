@@ -1,0 +1,81 @@
+div.topnavbar{
+  overflow: hidden;
+  background-color:  #000000;
+}
+div.topnavbar a{
+  float:right;
+  color:  #FF0000;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 20px;
+  width: 28%;
+}
+div.topnavbar a:hover{
+  background-color: #8B0000;
+  font-weight: bold;
+  color:whitesmoke;
+}
+div.topnavbar a.active{
+  background-color: #800000;
+  color: whitesmoke;
+  font-weight: bold;
+}
+div.topnavbar img{
+  padding-left: 20px;
+}
+
+.container{
+  /* background-color: dark; */
+  height: 500px;
+  width: 300px;
+  margin-left: 14%;
+  margin-top: 2%;
+  /* border: 1px rgb(19, 17, 17) solid;  */
+  padding: 20px;
+  font-size: 20px;
+}
+
+.btn{
+  background-color: #000000;
+  border: 3px solid;
+  color: #FF0000;
+  padding: 16px 32px;
+  text-decoration: none;
+  margin: 10px 80px;
+  cursor: pointer;
+  margin-right: 10%;
+  font-size: 25px;
+  border-radius: 12px;
+  border-color: #FF0000;
+}
+
+#bodybackgound{
+  background-repeat:no-repeat ;
+
+  background-size:100%;
+
+  background-attachment: fixed;"
+}
+
+input[type=text] {
+  width: 350px;
+  height: 50px;
+  border: 2px solid red;
+  border-radius: 4px;
+  /* color: grey; */
+  background-color: 		#DCDCDC;
+}
+
+.container img{
+  width: 100%;
+  height: 50%;
+  display:block;
+  margin-left: 5%;
+  /* margin-top: ; */
+}
+
+.subtitle{
+  color: red;
+  line-height:1px;
+}
