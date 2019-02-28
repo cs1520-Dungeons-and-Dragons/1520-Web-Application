@@ -70,10 +70,10 @@ def add_header(resp):
 def dice_roll(data):
     roll = random.randint(1, int(data['dice_type']))
     roll2 = -1
-    msg = session.get('name') + ' rolled a ' + str(roll) +'!'
+    msg = '(d' + str(data['dice_type']) + '): ' + session.get('name') + ' rolled a ' + str(roll)
     if(data['adv'] != data['disadv']):
         roll2 = random.randint(1, int(data['dice_type']))
-        msg = (session.get('name') + ' rolled ' + str(roll) + ' and ' + str(roll2) + ' with ' + ('advantage' if data['adv'] else 'disadvantage') + ': use roll ' 
+        msg = ('(d' + str(data['dice_type']) + '): ' + session.get('name') + ' rolled ' + str(roll) + ' and ' + str(roll2) + ' with ' + ('advantage' if data['adv'] else 'disadvantage') + ': use roll ' 
         + (str(max(roll, roll2)) if data['adv'] else str(min(roll, roll2))))
 
     emit('roll', {'msg': msg, 'color':'green', 'weight':'bold'}, room=session.get('room'))
