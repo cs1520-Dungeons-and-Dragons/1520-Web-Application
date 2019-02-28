@@ -54,11 +54,11 @@ body{
 
 .roll{
     float: right;
-    margin-right: -180px;
+    margin-right: -35%;
 }
 
 .roll_type{
-    margin-left: -40px;
+    margin-left: -30%;
 }
 
 .btn{
