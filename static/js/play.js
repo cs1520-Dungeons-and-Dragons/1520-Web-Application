@@ -19,6 +19,11 @@ $(document).ready(function(){
 		$('#chatlog').append('<p style=\'color:' + data.color + '\'>' + data.msg + '</p>');
 		$('#chatlog').scrollTop($('#chatlog')[0].scrollHeight);
 	});
+
+    socket.on('roll', function(data){
+        $('#chatlog').append('<p style=\'color:' + data.color + ';' + 'font-weight:' + data.weight +'\'>' + data.msg + '</p>');
+		$('#chatlog').scrollTop($('#chatlog')[0].scrollHeight);
+    });
 	
 	$('#text').keypress(function(e){
 		var code = e.keyCode || e.which;
@@ -43,10 +48,10 @@ $(document).ready(function(){
 	});
 
     $('#dice_roll').click(function(){
-        socket.emit('dice_roll', {dice_type: $('#dice_list').val(), adv: $('#adv').val(), disadv: $('#disadv').value});
-
+        var adv, disadv;
+        $('#adv:checked').val() == "on" ? adv = true: adv = false;
+        $('#disadv:checked').val() == "on" ? disadv = true: disadv = false;
+        socket.emit('dice_roll', {dice_type: $('#dice_list').val(), adv: adv, disadv: disadv});
     });
 
-
-    
 });

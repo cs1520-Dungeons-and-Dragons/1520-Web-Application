@@ -71,12 +71,12 @@ def dice_roll(data):
     roll = random.randint(1, int(data['dice_type']))
     roll2 = -1
     msg = session.get('name') + ' rolled a ' + str(roll) +'!'
-    if(data['adv'] == True != data['disadv'] == True):
+    if(data['adv'] != data['disadv']):
         roll2 = random.randint(1, int(data['dice_type']))
-        msg = session.get('name') + ' rolled ' + roll + ' and ' + roll2 + ' with ' + ('advantage' if data['adv'] else 'disadvantage') + ': use roll ' 
-        + (max(roll1, roll2) if data['adv'] else min(roll1, roll2))
+        msg = (session.get('name') + ' rolled ' + str(roll) + ' and ' + str(roll2) + ' with ' + ('advantage' if data['adv'] else 'disadvantage') + ': use roll ' 
+        + (str(max(roll, roll2)) if data['adv'] else str(min(roll, roll2))))
 
-    emit('status', {'msg': msg, 'color':'green'}, room=session.get('room'))
+    emit('roll', {'msg': msg, 'color':'green', 'weight':'bold'}, room=session.get('room'))
    
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port=8080, debug=True)
