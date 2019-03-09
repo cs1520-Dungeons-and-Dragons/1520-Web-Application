@@ -41,10 +41,16 @@ def add_client(clients, room, uname):
   last_client = clients # save new client list
 
 # helper from when client leaves room, remove Client entry for uname and from room list
+# update client list
 def remove_client(uname, room):
+  global last_client
+  global r_to_client
+  global u_to_client
   to_rem = u_to_client.pop(uname) # remove leaving client's entry and get val
   if to_rem in r_to_client[room]:
     r_to_client[room].remove(to_rem)
+  if to_rem in last_client:
+    last_client.remove(to_rem)  # client gone
   
 
 # helper to determine what type of request based on header, form response
@@ -90,25 +96,12 @@ def chat_socket(ws):
     room = session.get('room')
     resp = decide_request(msg, uname, clients, room)
     # send response to every one in sender's room
-    # filter out clients that aren't in room
-    #in_room = list(filter(lambda x: x.address in r_to_ip[room], clients))
     for client in r_to_client[room]:
       print("sending")
       print(resp)
       client.ws.send(resp)
     
 
-'''
-
-# on client leaving room
-@socketio.on('left', namespace='/play')
-def handle_leave(message):
-    room = session.get('room')
-    uname = session.get('name')
-    leave_room(room)
-    emit('status', {'msg': uname + ' has left the battle!', 'color': 'red'}, room=room)
-
-'''
 @app.route('/')
 def root():
     return redirect("/static/index.html", code=302)
@@ -127,19 +120,6 @@ def join_post():
   # store session info for use
   session['name'] = request.form['uname']
   session['room'] = request.form['rname']
-  #rname = request.form['rname']
-  '''
-  # store IP, port tuple of client connected to room
-  client_tup = (request.remote_addr, int(request.environ.get('REMOTE_PORT')))
-  print(client_tup) # DEBUG
-  if rname in r_to_ip.keys():
-    r_to_ip[rname].append(client_tup)
-  else:
-    r_to_ip[rname] = []
-    r_to_ip[rname].append(client_tup)
-  #msg = session.get('name') + ' joined room: ' + session.get('room')
-  #print(msg)
-  '''
   return redirect(url_for('.play'), code=302)
 
 # disabling caching by modifying headers of each response
