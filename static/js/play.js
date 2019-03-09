@@ -38,6 +38,12 @@ $(document).ready(function(){
       }
     }
 
+    //handle closing of socket, go back to index page
+    socket.onclose = function(){
+      window.location.href = "/static/index.html";
+    }
+
+    //Begin handlers for user-initiated events
     //handle if user sends message
     $('#text').keypress(function(e){
 		  var code = e.keyCode || e.which;
@@ -66,17 +72,12 @@ $(document).ready(function(){
       let msg = JSON.stringify({type: 'dice_roll', dice_type: $('#dice_list').val(), adv: adv, disadv: disadv});
       socket.send(msg);
     });
-    /*
 
-	
-	
-	  $('#leave').click(function(){
-		  socket.emit('left', {}, function(){
-			  socket.disconnect();
-			  window.location.href = "/static/index.html";
-		  });
-	  });
-
-    */
-
+    //handle if user chooses to leave the room
+    $('#leave').click(function(){
+      // send leaving message first, and then close the connection
+      let msg = JSON.stringify({type: 'leave'});
+      socket.send(msg);
+      socket.close();
+    })
 });
