@@ -79,7 +79,7 @@ def decide_request(req, uname, clients, room):
 
 # begin listening for different socket events
 
-# on client joining chat room, process request and decide how to form response
+# on client sending socket message, process request and decide how to form response
 @sockets.route('/play')
 def chat_socket(ws):
   # while socket is open, process messages
