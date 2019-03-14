@@ -1,16 +1,23 @@
 from flask import Flask, url_for, redirect, render_template, request
 from flask import session, jsonify
 from flask_sockets import Sockets
+from flask_pymongo import PyMongo
 import random
 import json
+from yattag import Doc
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'memeslol'
+app.config['MONGO_URI'] = "mongodb+srv://admin:1520isanepicclass%5F@dnd1520-zn4pg.gcp.mongodb.net/play?retryWrites=true"
+# initialize mongo client for db ops
+mongo = PyMongo(app)
+
 
 sockets = Sockets(app)             # create socket listener
 u_to_client = {}                  # map users to Client object
 r_to_client = {}                # map room to list of Clients connected`(uses Object from gevent API)
 last_client = []            # use to store previous clients list, compare to track clients
+single_events = ['get_sheet'] # track events where should only be sent to sender of event, i.e. not broadcast
 
 # helper to roll dice, takes dice type and adv/disadv attributes
 def roll_dice(size, adv, dis, uname):
@@ -51,7 +58,91 @@ def remove_client(uname, room):
     r_to_client[room].remove(to_rem)
   if to_rem in last_client:
     last_client.remove(to_rem)  # client gone
+
+# helper to form sheet for player based on uname and room, can be either psheet or DM, retrieves from DB
+# turns into proper HTML format
+def get_player_stats(uname, room):
+  # build a dict of response stats (HARD CODED FOR TESTING)
+  raw_resp = {
+    'name': 'Mikey',
+    'class': 'Necromancer',
+    'race': 'Dark Elf',
+    'str': '74',
+    'dex': '56',
+    'const': '22',
+    'intell': '65',
+    'wis': '49',
+    'char': '33',
+    'level': '88',
+    'xp': '300',
+    'next_xp': '33',
+    'languages':
+      ['Elvish', 'Dwarf'],
+    'enhan':
+      ['fat', 'cool', 'memes'],
+    'resist':
+      ['air', 'fire'],
+    'special':
+      ['Breathe water', 'fire breath'],
+    'armor': '29',
+    'hp': '350',
+    'heroics': '15',
+    'weapons':
+      [{'name': 'Greatsword', 'to_hit': '22', 
+      'damage': '35', 'range': '12', 'notes': 'It sucks'}],
+    'items':
+      [{'name': 'special ring', 'weight': '8', 'notes': 'kills things'},
+      {'name': 'old book', 'weight': '12', 'notes': 'eerie...'}],
+    'total_weight': '20',
+    'max_weight': '100',
+    'base_speed': '30',
+    'curr_speed': '50',
+    'condition': 'fair',
+    'treasures':
+      {'gp': '32', 'cp': '22', 
+      'pp': '0', 'ep': '20', 'sp': '0', 
+      'gems': [{'name': 'rubies', 'num': '2'},
+        {'name': 'sapphires', 'num': '3'}]},
+    'type': 'sheet'
+  }
+  # use dict to build HTML using library
+  doc, tag, text = Doc().tagtext()
+  with tag('div', klass = 'row'):
+    with tag('div', klass = 'col namebox'):
+      with tag('div', klass = 'row'):
+        with tag('div', klass = 'col namefields'):
+          text('Name: ' + raw_resp['name'])
+      with tag('div', klass = 'row'):
+        with tag('div', klass = 'col namefields'):
+          text('Class: ' + raw_resp['class'])
+      with tag('div', klass = 'row'):
+        with tag('div', klass = 'col namefields'):
+          text('Race: ' + raw_resp['race'])
+    with tag('div', klass = 'col levelbox'):
+      with tag('div', klass = 'row'):
+        with tag('div', klass = 'col levelfields'):
+          text('Level: ' + raw_resp['level'])
+      with tag('div', klass = 'row'):
+        with tag('div', klass = 'col levelfields'):
+          text('Experience Points: ' + raw_resp['xp'])
+      with tag('div', klass = 'row'):
+        with tag('div', klass = 'col levelfields'):
+          text('Next Level Exp: ' + raw_resp['next_xp'])
+      with tag('div', klass = 'row'):
+        with tag('div', klass = 'col levelfields'):
+          text('Languages: ' + (', ').join(raw_resp['languages']))
+      with tag('div', klass = 'row'):
+        with tag('div', klass = 'col levelfields'):
+          text('Conditions + Enchancements: ' + (', ').join(raw_resp['enhan']))
+      with tag('div', klass = 'row'):
+        with tag('div', klass = 'col levelfields'):
+          text('Resistances: ' + (', ').join(raw_resp['resist']))
+      with tag('div', klass = 'row'):
+        with tag('div', klass = 'col levelfields'):
+          text('Special Skills + Abilities: ' + (', ').join(raw_resp['special']))
   
+  resp = doc.getvalue()
+  return resp
 
 # helper to determine what type of request based on header, form response
 def decide_request(req, uname, clients, room):
@@ -73,6 +164,10 @@ def decide_request(req, uname, clients, room):
     # someone leaving the room, remove from room client list to avoid issues, print status
     remove_client(uname, room)
     resp = {'msg': uname + ' has left the battle.', 'color': 'red', 'type': 'status'}
+  elif req_type == 'get_sheet':
+    # client asking for psheet OR DM info, depending on type, send requested info in JSON
+    data = get_player_stats(uname, room)
+    resp = {'msg': data, 'type': 'sheet'}
   return json.dumps(resp) # convert JSON to string
 
 
@@ -90,16 +185,26 @@ def chat_socket(ws):
     # store name of sender
     uname = session.get('name')
     global r_to_client
+    global u_to_client
     msg = json.loads(message) # convert to dict
     # now process message dependent on type + room, clients
     clients = list(ws.handler.server.clients.values())
     room = session.get('room')
     resp = decide_request(msg, uname, clients, room)
-    # send response to every one in sender's room
-    for client in r_to_client[room]:
+    # check if broadcast or single event
+    broadcast = True if msg['type'] not in single_events else False
+    # send response to every one in sender's room if broadcast 
+    if broadcast:
+      for client in r_to_client[room]:
+        print("sending")
+        print(resp)
+        client.ws.send(resp)
+    else:
+      # otherwise only to sender of event
+      curr = u_to_client[uname]
       print("sending")
       print(resp)
-      client.ws.send(resp)
+      curr.ws.send(resp)
     
 
 @app.route('/')

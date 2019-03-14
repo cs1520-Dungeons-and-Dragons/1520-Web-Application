@@ -9,13 +9,17 @@ $(document).ready(function(){
     var scheme = window.location.protocol == "https:" ? 'wss://' : 'ws://';
     var socket_uri = scheme + window.location.hostname + ':' + location.port + '/play';
     socket = new WebSocket(socket_uri);         //create socket for URI
+    var sheet = $('#sheet');        //save sheet element for adding in sheet/DM info
 
     // begin event handlers for socket
     //when new connection opened, should send type: enter
     socket.onopen = function(){
 	    console.log("opened socket");
       // store in JSON for easy Python parsing
+      // first send request for entry, then psheet or DM info
       let msg = JSON.stringify({type: 'enter'});
+      socket.send(msg);
+      msg = JSON.stringify({type: 'get_sheet'});
       socket.send(msg);
     };
     
@@ -34,6 +38,10 @@ $(document).ready(function(){
         case 'roll':
           $('#chatlog').append('<p style=\'color:' + data.color + ';' + 'font-weight:' + data.weight +'\'>' + data.msg + '</p>');
           $('#chatlog').scrollTop($('#chatlog')[0].scrollHeight);
+          break;
+        case 'sheet':
+          //server has sent the psheet or DM info for this player
+          sheet.html(data.msg);   // add sheet to HTML
           break;
       }
     }
@@ -79,5 +87,6 @@ $(document).ready(function(){
       let msg = JSON.stringify({type: 'leave'});
       socket.send(msg);
       socket.close();
-    })
+    });
+
 });

@@ -49,8 +49,26 @@ body{
 }
 
 .chat{
-
+  margin-right: 50px;
 }
+
+#sheet{
+    float: right;
+    background-color: rgba(114, 116, 42, 0.897);
+    margin: -8% -250px 7% 3%;
+    border-radius: 3px;
+    border: 1px solid #DEDEDE;
+    font-family: 'Yantramanav', sans-serif;
+}
+
+.col {
+    background-color: rgba(0,0,0,0.1);
+    border-radius: 3px;
+    border: 1px solid #dedede;
+    width: auto;
+    padding: 10px;
+    margin: 5px;
+  }
 
 .roll{
     float: right;
