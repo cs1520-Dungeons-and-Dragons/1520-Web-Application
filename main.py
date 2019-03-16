@@ -89,7 +89,9 @@ def get_player_stats(uname, room):
     'heroics': '15',
     'weapons':
       [{'name': 'Greatsword', 'to_hit': '22', 
-      'damage': '35', 'range': '12', 'notes': 'It sucks'}],
+      'damage': '35', 'range': '12', 'notes': 'It sucks'},
+      {'name': 'Holy Bow', 'to_hit': '45', 
+      'damage': '22', 'range': '65', 'notes': 'Will kill you'}],
     'items':
       [{'name': 'special ring', 'weight': '8', 'notes': 'kills things'},
       {'name': 'old book', 'weight': '12', 'notes': 'eerie...'}],
@@ -107,6 +109,9 @@ def get_player_stats(uname, room):
   }
   # use dict to build HTML using library
   doc, tag, text = Doc().tagtext()
+  with tag('div', klass = 'row'):
+    with tag('div', klass = 'col sheet_title'):
+      text('~ Player Sheet ~')
   with tag('div', klass = 'row'):
     with tag('div', klass = 'col namebox'):
       with tag('div', klass = 'row'):
@@ -140,6 +145,73 @@ def get_player_stats(uname, room):
       with tag('div', klass = 'row'):
         with tag('div', klass = 'col levelfields'):
           text('Special Skills + Abilities: ' + (', ').join(raw_resp['special']))
+  with tag('div', klass = 'row'):
+    with tag('div', klass = 'col attrbox'):
+      with tag('div', klass = 'row'):
+        with tag('div', klass = 'col str'):
+          text(raw_resp['str'] + ' Strength')
+      with tag('div', klass = 'row'):
+        with tag('div', klass = 'col dex'):
+          text(raw_resp['dex'] + ' Dexterity')
+      with tag('div', klass = 'row'):
+        with tag('div', klass = 'col const'):
+          text(raw_resp['const'] + ' Constitution')
+      with tag('div', klass = 'row'):
+        with tag('div', klass = 'col intell'):
+          text(raw_resp['intell'] + ' Intelligence')
+      with tag('div', klass = 'row'):
+        with tag('div', klass = 'col wis'):
+          text(raw_resp['wis'] + ' Wisdom')
+      with tag('div', klass = 'row'):
+        with tag('div', klass = 'col char'):
+          text(raw_resp['char'] + ' Charisma')
+    with tag('div', klass = 'col statbox'):
+      with tag('div', klass = 'row'):
+        with tag('div', klass = 'col armor'):
+          text(raw_resp['armor'])
+      with tag('div', klass = 'row'):
+        with tag('div', klass = 'col'):
+          text('Armor Class')
+      with tag('div', klass = 'row'):
+        with tag('div', klass = 'col hp'):
+          text(raw_resp['hp'])
+      with tag('div', klass = 'row'):
+        with tag('div', klass = 'col'):
+          text('Hit Points')
+      with tag('div', klass = 'row'):
+        with tag('div', klass = 'col heroics'):
+          text(raw_resp['heroics'])
+      with tag('div', klass = 'row'):
+        with tag('div', klass = 'col'):
+          text('Heroics')
+  with tag('div', klass = 'row'):
+    with tag('div', klass = 'col wepbox'):
+      with tag('div', klass = 'row'):
+        with tag('div', klass = 'col wepfields'):
+          text('Weapon')
+        with tag('div', klass = 'col wepfields'):
+          text('To Hit')
+        with tag('div', klass = 'col wepfields'):
+          text('Damage')
+        with tag('div', klass = 'col wepfields'):
+          text('Range')
+        with tag('div', klass = 'col wepfields'):
+          text('Notes')
+      for weapon in raw_resp['weapons']:
+        with tag('div', klass = 'row'):
+          with tag('div', klass = 'col wepfields'):
+            text(weapon['name'])
+          with tag('div', klass = 'col wepfields'):
+            text(weapon['to_hit'])
+          with tag('div', klass = 'col wepfields'):
+            text(weapon['damage'])
+          with tag('div', klass = 'col wepfields'):
+            text(weapon['range'])
+          with tag('div', klass = 'col wepfields'):
+            text(weapon['notes'])
+
+      
+        
   
   resp = doc.getvalue()
   return resp
