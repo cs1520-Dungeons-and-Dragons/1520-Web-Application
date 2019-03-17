@@ -37,8 +37,11 @@
                 <button class = "btn" id ="dice_roll">Roll</button>
             </div>
         </div>
-        <div class="container" id="sheet">
-        </div>
+        {% if isPlayer %}
+          <div class="container" id="sheet"></div>
+        {% else %}
+          <div class="container" id="dmstuff"></div>
+        {% endif %}
 		<input id="text" size="118" placeholder="Enter message...">
 		<button class = "btn" id="leave">Leave Room</button>
 	</body>

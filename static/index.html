@@ -26,8 +26,10 @@
       <div class="container">
 		<img src="./assets/image2.png" alt="logo">
         <form class="form-inline" action="/joinRoom" method="POST">
-		  <input class="field" id="user" type="text" placeholder="User Name" name="uname" required>
-		  <input class="field" id="roomname" type="text" placeholder="Room Name" name="rname" required>
+          <input class="field" id="user" type="text" placeholder="User Name" name="uname" required>
+          <input class="field" id="roomname" type="text" placeholder="Room Name" name="rname" required>
+          <input class="radiobtn" id="player" type="radio" value="Player" name="isPlayer" checked="checked">
+          <input class="radiobtn" id="dm" type="radio" value="DM" name="isPlayer">
           <button class="btn">Join as Player</button>
         </form>
       </div>

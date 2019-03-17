@@ -288,7 +288,8 @@ def play():
     #print ('in play\n')
     room = session.get('room')
     name = session.get('name')
-    return render_template('play.html', room=room, name=name)
+    isPlayer = session.get('isPlayer')
+    return render_template('play.html', room=room, name=name, isPlayer=isPlayer)
 
 #post to join room, store session data for user
 # redirect them to play url
@@ -297,6 +298,7 @@ def join_post():
   # store session info for use
   session['name'] = request.form['uname']
   session['room'] = request.form['rname']
+  session['isPlayer'] = True if request.form['isPlayer'] == "Player" else False
   return redirect(url_for('.play'), code=302)
 
 # disabling caching by modifying headers of each response
