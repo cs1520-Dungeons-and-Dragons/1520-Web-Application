@@ -9,7 +9,6 @@ $(document).ready(function(){
     var scheme = window.location.protocol == "https:" ? 'wss://' : 'ws://';
     var socket_uri = scheme + window.location.hostname + ':' + location.port + '/play';
     socket = new WebSocket(socket_uri);         //create socket for URI
-    var sheet = $('#sheet');        //save sheet element for adding in sheet/DM info
 
     // begin event handlers for socket
     //when new connection opened, should send type: enter
@@ -22,7 +21,7 @@ $(document).ready(function(){
       msg = JSON.stringify({type: 'get_sheet'});
       socket.send(msg);
     };
-    
+
     //handle receipt of messages, behavior changes based on type
     socket.onmessage = function(msg){
       data = JSON.parse(msg.data); //convert to JS object
@@ -39,9 +38,12 @@ $(document).ready(function(){
           $('#chatlog').append('<p style=\'color:' + data.color + ';' + 'font-weight:' + data.weight +'\'>' + data.msg + '</p>');
           $('#chatlog').scrollTop($('#chatlog')[0].scrollHeight);
           break;
+        case 'dmstuff':
+          $('dmstuff').html("Press [F] to pay respects."  + data.msg);
+          break;
         case 'sheet':
           //server has sent the psheet or DM info for this player
-          sheet.html(data.msg);   // add sheet to HTML
+          $('#sheet').html(data.msg);   // add sheet to HTML
           break;
       }
     }
