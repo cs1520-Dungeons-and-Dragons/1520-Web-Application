@@ -8,7 +8,6 @@ import pyrebase
 
 # config for Firebase, initialize connect
 config = {
-  'apiKey': "AIzaSyAV3OKN1SwwMrWDUA6i4bAS0Nbdv8grl8g",
   'authDomain': "dndonline.firebaseapp.com",
   'databaseURL': "https://dndonline.firebaseio.com",
   'storageBucket': "dndonline.appspot.com",
