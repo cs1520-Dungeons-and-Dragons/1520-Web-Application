@@ -1,3 +1,10 @@
+#hidden{
+	display: none;
+}
+
+#shown{
+	display: inline-block; //idk if this is the right one
+}
 #utilities{
 	display: inline-block;
 	float: right;
@@ -76,6 +83,31 @@ body{
     font-family: 'MedievalSharp';
 }
 
+#dmstuff{
+    float: left;
+    background-color: rgba(56, 48, 9, 0.966);
+    color: rgba(163, 163, 163, 0.966);
+    //margin: -8% -12.875% 7% 3%;
+    border-radius: 3px;
+    border: 1px solid #DEDEDE;
+    font-family: 'MedievalSharp';
+}
+
+.dmcontent {
+}
+
+.dmmonsterlist{
+  display: inline-block;
+}
+
+.dmmonsteredit{
+  display: inline-block;
+}
+
+.dmencountercontent{
+  display: inline-block;
+}
+
 .col {
     background-color: rgba(0,0,0,0.1);
     border-radius: 3px;
@@ -87,17 +119,6 @@ body{
 
 .sheet_title {
     text-align: center;
-}
-
-#dmstuff{
-	float: right;
-	background-color: rgba(56, 48, 9, 0.966);
-	color: "green";
-}
-
-.hehe {
-	color: "purple";
-	font-size: 40px;
 }
 
 .roll{
@@ -151,5 +172,5 @@ label {
     font-family: "Trebuchet MS", sans-serif;
     cursor: pointer;
     color: rgb(241, 241, 212);
-    margin-left: -30px;
+    //margin-left: -30px;
 }

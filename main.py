@@ -211,12 +211,82 @@ def get_player_stats(uname, isPlayer, room):
             with tag('div', klass = 'col wepfields'):
               text(weapon['notes'])
   else:
-    raw_resp = {}
+    #fake response and probably wont have the same parameters as a real one
+    raw_resp = {
+      'notes' : 'here are my notes we can just save this as plaintext maybe i will find a \nway to make a rich text editor so we can format \nthings better that would be cool.',
+      'monsters' : [{
+        'type':'man',
+        'health':'50',
+        'armor class':'13',
+        'attack': '12',
+        'size':'biig'
+      },{
+        'type':'cat',
+        'health':'1000000',
+        'armor class':'1000000',
+        'attack': '1000000',
+        'size':'small'
+      }],
+      'encounter' : {
+        'monsters':[{
+          'name' : 'Big man',
+          'type' : 'man'
+        },{
+          'name' : 'Krusty Louis',
+          'type' : 'cat'
+        }],
+        'turnorder':[]
+      }
+    }
     # use dict to build HTML using library
     doc, tag, text = Doc().tagtext()
-    with tag('div', klass = 'hehe'):
-        text('ligma')
-
+    with tag('div', klass = 'row'):
+      with tag('div', klass = 'col sheet_title'):
+        text(' ~ DM Sheet ~ ')
+    with tag('div', klass = 'row'):
+      with tag('div', klass = 'col dmbutton', id='encounter'):
+        text('Encounter')
+      with tag('div', klass = 'col dmbutton', id='monster'):
+        text('Monsters')
+      with tag('div', klass = 'col dmbutton', id='notes'):
+        text('Notes')
+    with tag('div', klass = 'row dmcontent'):
+      with tag('div', klass = 'col dmnotes', id='shown'):
+        with tag('textarea', placeholder='Notes for campaign go here...', id='dmtextarea'):
+          text(raw_resp['notes'])
+      with tag('div', klass = 'col dmmonster', id='hidden'):
+        with tag('div', klass = 'col col-xs-4 col-sm-4 col-md-4 dmmonsterlist'):
+          with tag('div', klass='row'):
+            with tag('div', klass='col'):
+              text('Monster List')
+          with tag('div', klass='row'):
+            with tag('div', klass='col', id='mmonsterlist'):
+              for monster in raw_resp['monsters']:
+                with tag('div', klass = 'col'):
+                  text(monster['type'])
+                  with tag('div', klass='json'+monster['type'] ,id='hidden'):
+                    text(str(monster))
+        with tag('div', klass = 'col col-xs-8 col-sm-8 col-md-8 dmmonsteredit'):
+          with tag('div', klass = 'row'):
+            with tag('div', klass = 'col', id='monsteredit'):
+              text('Edit monsters here.')
+      with tag('div', klass = 'col dmencounter', id='hidden'):
+        with tag('div', klass = 'col col-xs-4 col-sm-4 col-md-4 dmmonsterlist'):
+          with tag('div', klass='row'):
+            with tag('div', klass='col'):
+              text('Monster List')
+          with tag('div', klass='row'):
+            with tag('div', klass='col', id='emonsterlist'):
+              for monster in raw_resp['monsters']:
+                with tag('div', klass = 'col'):
+                  text(monster['type'])
+                  with tag('div', klass='json'+monster['type'], id='hidden'):
+                    text(str(monster))
+        with tag('div', klass = 'col-xs-8 col-sm-8 col-md-8 dmencountercontent'):
+          with tag('div', klass = 'col dmturnorder'):
+            text('turn order stuff here')
+          with tag('div', klass = 'col', id='dmmonsterinfo'):
+            text('specific enemy info here')
   resp = doc.getvalue()
   return resp
 
