@@ -1,17 +1,23 @@
 from flask import Flask, url_for, redirect, render_template, request
 from flask import session, jsonify
 from flask_sockets import Sockets
-from flask_pymongo import PyMongo
 import random
 import json
 from yattag import Doc
+import pyrebase
+
+# config for Firebase, initialize connect
+config = {
+  'apiKey': "AIzaSyAV3OKN1SwwMrWDUA6i4bAS0Nbdv8grl8g",
+  'authDomain': "dndonline.firebaseapp.com",
+  'databaseURL': "https://dndonline.firebaseio.com",
+  'storageBucket': "dndonline.appspot.com",
+  'serviceAccount': "./creds/dndonline-firebase-adminsdk-6ccqw-c013986cd2.json"
+}
+fb = pyrebase.initialize_app(config)
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'memeslol'
-app.config['MONGO_URI'] = "mongodb+srv://admin:1520isanepicclass%5F@dnd1520-zn4pg.gcp.mongodb.net/play?retryWrites=true"
-# initialize mongo client for db ops
-mongo = PyMongo(app)
-
 
 sockets = Sockets(app)             # create socket listener
 u_to_client = {}                  # map users to Client object
@@ -210,6 +216,23 @@ def get_player_stats(uname, isPlayer, room):
               text(weapon['range'])
             with tag('div', klass = 'col wepfields'):
               text(weapon['notes'])
+    with tag('div', klass = 'row'):
+      with tag('div', klass = 'col itembox'):
+        with tag('div', klass = 'row'):
+          with tag('div', klass = 'col itemfields'):
+            text('Name')
+          with tag('div', klass = 'col itemfields'):
+            text('Weight')
+          with tag('div', klass = 'col itemfields'):
+            text('Notes')
+        for item in raw_resp['items']:
+          with tag('div', klass = 'row'):
+            with tag('div', klass = 'col itemfields'):
+              text(item['name'])
+            with tag('div', klass = 'col itemfields'):
+              text(item['weight'])
+            with tag('div', klass = 'col itemfields'):
+              text(item['notes'])
   else:
     #fake response and probably wont have the same parameters as a real one
     raw_resp = {
